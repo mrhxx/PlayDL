@@ -70,7 +70,7 @@ def calculate_2d_ifft(ksp: np.array, dim = None):
     return np.fft.ifft2(np.fft.ifftshift(ksp), dim)
 
 def downsample_image(img: np.array, dim):
-    return ski.transform.resize(img, dim)
+    return ski.transform.resize(img, dim, order=3, mode='reflect', anti_aliasing=True)
 
 def downsample_image_by_fft(img: np.array, act_size, recon_size = None):
     if recon_size is None:
