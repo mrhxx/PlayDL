@@ -10,11 +10,11 @@ class ResidualEncoderDecoder(nn.Module):
         self.conv4 = nn.Conv2d(in_channels=16, out_channels=64, kernel_size=20, stride=1, padding=0, bias=False)
         self.conv5 = nn.Conv2d(in_channels=64, out_channels=64, kernel_size=20, stride=1, padding=0, bias=False)
         
-        self.tconv1 = nn.Conv2d(in_channels=64, out_channels=64, kernel_size=20, stride=1, padding=0, bias=False)
-        self.tconv2 = nn.Conv2d(in_channels=64, out_channels=16, kernel_size=20, stride=1, padding=0, bias=False)
-        self.tconv3 = nn.Conv2d(in_channels=16, out_channels=16, kernel_size=10, stride=1, padding=0, bias=False)
-        self.tconv4 = nn.Conv2d(in_channels=16, out_channels=8, kernel_size=10, stride=1, padding=0, bias=False)
-        self.tconv5 = nn.Conv2d(in_channels=8, out_channels=1, kernel_size=5, stride=1, padding=0, bias=False)
+        self.tconv1 = nn.ConvTranspose2d(in_channels=64, out_channels=64, kernel_size=20, stride=1, padding=0, bias=False)
+        self.tconv2 = nn.ConvTranspose2d(in_channels=64, out_channels=16, kernel_size=20, stride=1, padding=0, bias=False)
+        self.tconv3 = nn.ConvTranspose2d(in_channels=16, out_channels=16, kernel_size=10, stride=1, padding=0, bias=False)
+        self.tconv4 = nn.ConvTranspose2d(in_channels=16, out_channels=8, kernel_size=10, stride=1, padding=0, bias=False)
+        self.tconv5 = nn.ConvTranspose2d(in_channels=8, out_channels=1, kernel_size=5, stride=1, padding=0, bias=False)
         
         self.relu = nn.ReLU()
                 
@@ -22,12 +22,12 @@ class ResidualEncoderDecoder(nn.Module):
         # Encoder layers
         res_1 = x
         out = self.relu(self.conv1(x))
-        out = self.relu(self.conv2(x))
+        out = self.relu(self.conv2(out))
         res_2 = out
-        out = self.relu(self.conv3(x))
-        out = self.relu(self.conv4(x))
+        out = self.relu(self.conv3(out))
+        out = self.relu(self.conv4(out))
         res_3 = out
-        out = self.relu(self.conv5(x))
+        out = self.relu(self.conv5(out))
         
         # Decoder layers
         out = self.tconv1(out)
